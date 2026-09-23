@@ -1,3087 +1,735 @@
 <!DOCTYPE html>
 <html lang="hy">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#77765a">
-
-<title>Anahit & Arsen — Wedding Invitation</title>
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Serif+Armenian:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-
-<style>
-
-/* =========================================================
-   ROOT
-========================================================= */
-
-:root {
-    --khaki: #77765a;
-    --khaki-dark: #55533e;
-    --khaki-light: #a4a282;
-
-    --burgundy: #59152c;
-    --burgundy-dark: #3c0c1d;
-
-    --beige: #e9decd;
-    --cream: #f6f0e7;
-    --paper: #eee4d5;
-
-    --gold: #c7a65a;
-    --gold-light: #e6c979;
-
-    --text: #403b35;
-    --white: #fffdf8;
-
-    --serif: "Cormorant Garamond", serif;
-    --armenian: "Noto Serif Armenian", serif;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    background: var(--cream);
-    color: var(--text);
-    font-family: var(--serif);
-    overflow-x: hidden;
-}
-
-body.opened {
-    overflow-y: auto;
-}
-
-button,
-input,
-textarea {
-    font-family: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-/* =========================================================
-   LANGUAGE
-========================================================= */
-
-.language-switcher {
-    position: fixed;
-    top: 20px;
-    right: 22px;
-    z-index: 9999;
-
-    display: flex;
-    gap: 5px;
-
-    padding: 5px;
-
-    background: rgba(246,240,231,.86);
-    backdrop-filter: blur(12px);
-
-    border: 1px solid rgba(89,21,44,.15);
-    border-radius: 30px;
-
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
-}
-
-.language-switcher button {
-    border: 0;
-    background: transparent;
-
-    color: var(--burgundy);
-
-    padding: 6px 10px;
-
-    border-radius: 20px;
-
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-.language-switcher button.active {
-    background: var(--burgundy);
-    color: white;
-}
-
-
-/* =========================================================
-   MUSIC
-========================================================= */
-
-.music-control {
-    position: fixed;
-    right: 22px;
-    bottom: 22px;
-
-    width: 50px;
-    height: 50px;
-
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.35);
-
-    background: var(--burgundy);
-    color: white;
-
-    z-index: 9998;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    box-shadow: 0 10px 35px rgba(0,0,0,.22);
-
-    transition: .3s ease;
-}
-
-.music-control:hover {
-    transform: scale(1.08);
-}
-
-.music-control.playing {
-    animation: musicPulse 2s infinite;
-}
-
-@keyframes musicPulse {
-    0%,100% {
-        box-shadow: 0 0 0 0 rgba(89,21,44,.35);
-    }
-
-    50% {
-        box-shadow: 0 0 0 12px rgba(89,21,44,0);
-    }
-}
-
-.music-icon {
-    font-size: 19px;
-}
-
-
-/* =========================================================
-   ENVELOPE INTRO
-========================================================= */
-
-#envelope-screen {
-
-    position: fixed;
-    inset: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    min-height: 100svh;
-
-    background: #77765a;
-
-    z-index: 9000;
-
-    overflow: hidden;
-
-    transition:
-        opacity 1.5s ease,
-        visibility 1.5s ease;
-}
-
-#envelope-screen.hide {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-
-/*
-Envelope image
-*/
-
-.envelope-wrapper {
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    perspective: 1800px;
-}
-
-
-/*
-The actual envelope.
-We use your provided envelope photo as the entire design.
-*/
-
-.envelope {
-
-    position: relative;
-
-    width: min(100vw, 620px);
-    height: min(100vh, 1000px);
-
-    background-image:
-        url("https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1fe00499da93f36a28fba4a86e034bf4.jpg?v=1790166233");
-
-    background-size: cover;
-    background-position: center;
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.35);
-
-    overflow: hidden;
-
-    transform-style: preserve-3d;
-
-    transition:
-        transform 2s cubic-bezier(.2,.8,.2,1);
-}
-
-
-/*
-Desktop: make envelope almost full screen.
-*/
-
-@media (min-width: 700px) {
-
-    .envelope {
-        width: min(62vw, 720px);
-        height: 96vh;
-
-        max-height: 1100px;
-    }
-
-}
-
-
-/* =========================================================
-   LIGHT EFFECT
-========================================================= */
-
-.light-spread {
-
-    position: absolute;
-
-    width: 20px;
-    height: 20px;
-
-    left: 50%;
-    top: 51%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    background: white;
-
-    opacity: 0;
-
-    z-index: 20;
-
-    pointer-events: none;
-
-    box-shadow:
-        0 0 20px 10px rgba(255,238,180,.9),
-        0 0 60px 25px rgba(255,217,111,.7);
-}
-
-.opening .light-spread {
-
-    animation:
-        lightExpand 2.5s ease-in-out forwards;
-
-}
-
-@keyframes lightExpand {
-
-    0% {
-        opacity: 0;
-        width: 20px;
-        height: 20px;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: .8;
-
-        width: 220vmax;
-        height: 220vmax;
-
-        box-shadow:
-            0 0 100px 40px rgba(255,240,190,.8);
-    }
-}
-
-
-/* =========================================================
-   ROTATING LIGHT AROUND SEAL
-========================================================= */
-
-.seal-light {
-
-    position: absolute;
-
-    width: 145px;
-    height: 145px;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    z-index: 30;
-
-    pointer-events: none;
-
-    opacity: 0;
-}
-
-.seal-light::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 50%;
-
-    border: 2px solid transparent;
-
-    border-top-color: #fff3bb;
-    border-right-color: #e6c979;
-
-    box-shadow:
-        0 0 15px rgba(255,225,130,.9),
-        0 0 35px rgba(255,210,100,.5);
-}
-
-.opening .seal-light {
-
-    opacity: 1;
-
-    animation:
-        rotateSealLight 1.1s linear infinite;
-}
-
-@keyframes rotateSealLight {
-
-    to {
-        transform:
-            translate(-50%, -50%)
-            rotate(360deg);
-    }
-}
-
-
-/* =========================================================
-   SEAL BUTTON
-========================================================= */
-
-.seal-button {
-
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    width: 105px;
-    height: 105px;
-
-    border-radius: 50%;
-
-    border: 0;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #f5e8bd,
-            #d3b66d 55%,
-            #a98942 100%
-        );
-
-    color: var(--burgundy);
-
-    box-shadow:
-        0 10px 20px rgba(0,0,0,.25),
-        inset 0 2px 5px rgba(255,255,255,.7);
-
-    z-index: 40;
-
-    font-family: var(--serif);
-
-    font-size: 20px;
-
-    transition: .4s ease;
-}
-
-.seal-button:hover {
-
-    transform:
-        translate(-50%, -50%)
-        scale(1.05);
-
-    box-shadow:
-        0 0 25px rgba(238,210,125,.9),
-        0 10px 25px rgba(0,0,0,.25);
-}
-
-.seal-initials {
-    font-family: "Playfair Display", serif;
-    font-style: italic;
-    font-size: 24px;
-}
-
-
-/* =========================================================
-   CLICK INSTRUCTION
-========================================================= */
-
-.envelope-hint {
-
-    position: absolute;
-
-    bottom: 6%;
-
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    color: white;
-
-    text-align: center;
-
-    z-index: 50;
-
-    text-shadow:
-        0 2px 10px rgba(0,0,0,.4);
-
-    letter-spacing: 2px;
-
-    font-size: 12px;
-
-    animation: hintFloat 2.5s infinite;
-}
-
-@keyframes hintFloat {
-
-    0%,100% {
-        transform: translateX(-50%) translateY(0);
-        opacity: .7;
-    }
-
-    50% {
-        transform: translateX(-50%) translateY(-6px);
-        opacity: 1;
-    }
-}
-
-
-/* =========================================================
-   ENVELOPE FLAP
-========================================================= */
-
-.envelope-flap {
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 50%;
-
-    z-index: 15;
-
-    transform-origin: top center;
-
-    background:
-        url("https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1fe00499da93f36a28fba4a86e034bf4.jpg?v=1790166233")
-        center top / cover no-repeat;
-
-    clip-path: polygon(
-        0 0,
-        100% 0,
-        50% 100%
-    );
-
-    transition:
-        transform 2.8s cubic-bezier(.2,.75,.2,1);
-
-    backface-visibility: hidden;
-}
-
-
-/*
-Opening flap
-*/
-
-.opening .envelope-flap {
-
-    transform:
-        rotateX(-165deg);
-
-}
-
-
-/* =========================================================
-   INSIDE PAPER
-========================================================= */
-
-.inside-card {
-
-    position: absolute;
-
-    inset: 5%;
-
-    background: var(--cream);
-
-    z-index: 5;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    opacity: 0;
-
-    transform:
-        translateY(30px)
-        scale(.95);
-
-    transition:
-        opacity 1.8s ease 1s,
-        transform 2s ease 1s;
-}
-
-.opening .inside-card {
-
-    opacity: 1;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero {
-
-    position: relative;
-
-    min-height: 100svh;
-
-    display: flex;
-
-    align-items: flex-end;
-    justify-content: center;
-
-    overflow: hidden;
-
-    background: #332d28;
-}
-
-.hero-image {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    object-position: center;
-}
-
-.hero::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(20,13,10,.75),
-            rgba(20,13,10,.08) 65%,
-            rgba(20,13,10,.15)
-        );
-}
-
-.hero-content {
-
-    position: relative;
-
-    z-index: 2;
-
-    color: white;
-
-    width: min(900px, 90%);
-
-    padding: 80px 20px;
-
-    text-align: center;
-
-}
-
-.hero-small {
-
-    letter-spacing: 6px;
-
-    text-transform: uppercase;
-
-    font-size: 12px;
-
-    margin-bottom: 20px;
-}
-
-.hero h1 {
-
-    margin: 0;
-
-    font-size: clamp(45px, 8vw, 90px);
-
-    line-height: .9;
-
-    font-weight: 400;
-
-    font-style: italic;
-}
-
-.hero-names {
-
-    margin-top: 20px;
-
-    font-size: clamp(40px, 7vw, 75px);
-
-    color: #f5dfad;
-}
-
-.hero-date {
-
-    margin-top: 30px;
-
-    font-size: 16px;
-
-    letter-spacing: 3px;
-}
-
-
-/* =========================================================
-   GENERAL SECTIONS
-========================================================= */
-
-.section {
-
-    position: relative;
-
-    padding: 100px 20px;
-
-    background: var(--cream);
-}
-
-.section:nth-child(even) {
-    background: var(--beige);
-}
-
-.section-inner {
-
-    max-width: 1100px;
-
-    margin: auto;
-}
-
-.section-title {
-
-    text-align: center;
-
-    color: var(--burgundy);
-
-    font-size: clamp(40px, 7vw, 65px);
-
-    font-weight: 400;
-
-    margin: 0 0 20px;
-
-    line-height: 1;
-}
-
-.section-subtitle {
-
-    text-align: center;
-
-    max-width: 650px;
-
-    margin: 0 auto 60px;
-
-    font-size: 18px;
-
-    line-height: 1.7;
-}
-
-
-/* =========================================================
-   DATE SECTION
-========================================================= */
-
-.date-section {
-
-    background:
-        radial-gradient(
-            circle at top,
-            rgba(119,118,90,.15),
-            transparent 50%
-        ),
-        var(--cream);
-}
-
-.date-intro {
-
-    text-align: center;
-
-    font-size: 21px;
-
-    margin-bottom: 45px;
-}
-
-
-/*
-Scratch cards
-*/
-
-.scratch-date {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: clamp(12px, 4vw, 35px);
-
-    flex-wrap: wrap;
-}
-
-.scratch-group {
-
-    text-align: center;
-
-    width: 145px;
-}
-
-.scratch-box {
-
-    position: relative;
-
-    width: 145px;
-    height: 145px;
-
-    background: white;
-
-    border: 1px solid rgba(89,21,44,.25);
-
-    box-shadow:
-        0 15px 40px rgba(70,50,30,.1);
-
-    overflow: hidden;
-}
-
-.date-hidden {
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 10px;
-
-    text-align: center;
-
-    color: var(--burgundy);
-
-    font-size: 22px;
-
-    line-height: 1.1;
-
-    background: #f8f0e5;
-
-    z-index: 1;
-}
-
-.scratch-canvas {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    z-index: 2;
-
-    touch-action: none;
-
-    cursor: crosshair;
-}
-
-.scratch-label {
-
-    margin-top: 13px;
-
-    color: var(--burgundy);
-
-    font-size: 14px;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   SCHEDULE
-========================================================= */
-
-.schedule {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 30px;
-
-    margin-top: 60px;
-}
-
-.schedule-card {
-
-    position: relative;
-
-    min-height: 430px;
-
-    overflow: hidden;
-
-    background: var(--khaki-dark);
-
-    color: white;
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,.14);
-}
-
-.schedule-card img {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transition: transform 1s ease;
-}
-
-.schedule-card:hover img {
-    transform: scale(1.06);
-}
-
-.schedule-card::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(30,20,18,.88),
-            rgba(30,20,18,.05)
-        );
-}
-
-.schedule-content {
-
-    position: absolute;
-
-    left: 30px;
-    right: 30px;
-    bottom: 30px;
-
-    z-index: 2;
-}
-
-.schedule-time {
-
-    color: #ead18e;
-
-    font-size: 15px;
-
-    letter-spacing: 3px;
-}
-
-.schedule-card h3 {
-
-    margin: 8px 0;
-
-    font-size: 32px;
-
-    font-weight: 400;
-}
-
-.schedule-card p {
-
-    margin: 0;
-
-    font-size: 17px;
-}
-
-
-/* =========================================================
-   DRESS CODE
-========================================================= */
-
-.dress-code {
-
-    background: var(--burgundy);
-
-    color: white;
-}
-
-.dress-code .section-title {
-    color: #f2ddac;
-}
-
-.dress-code .section-subtitle {
-    color: #eadfd6;
-}
-
-.color-palette {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 25px;
-
-    flex-wrap: wrap;
-
-    margin: 50px 0;
-}
-
-.color-item {
-
-    text-align: center;
-
-    width: 130px;
-}
-
-.color-circle {
-
-    width: 105px;
-    height: 105px;
-
-    border-radius: 50%;
-
-    margin: auto auto 15px;
-
-    box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.2),
-        0 10px 30px rgba(0,0,0,.2);
-}
-
-.color-item span {
-
-    display: block;
-
-    font-size: 14px;
-
-    letter-spacing: 2px;
-}
-
-
-/*
-Colors
-*/
-
-.color-merlot {
-    background: #59152c;
-}
-
-.color-khaki {
-    background: #77765a;
-}
-
-.color-beige {
-    background: #d8c9b5;
-}
-
-.color-coffee {
-    background: #6a5146;
-}
-
-.color-rose {
-    background: #a98989;
-}
-
-.color-olive {
-    background: #555b3b;
-}
-
-
-/*
-No white warning
-*/
-
-.no-white {
-
-    max-width: 750px;
-
-    margin: 70px auto 0;
-
-    padding: 35px;
-
-    text-align: center;
-
-    border: 1px solid rgba(255,255,255,.25);
-
-    background: rgba(255,255,255,.07);
-
-    backdrop-filter: blur(8px);
-}
-
-.no-white h3 {
-
-    margin: 0 0 12px;
-
-    font-size: 30px;
-
-    color: #f0dba7;
-}
-
-.no-white p {
-
-    margin: 0;
-
-    font-size: 18px;
-
-    line-height: 1.7;
-}
-
-
-/* =========================================================
-   RSVP
-========================================================= */
-
-.rsvp {
-
-    background:
-        linear-gradient(
-            rgba(246,240,231,.96),
-            rgba(246,240,231,.96)
-        ),
-        url("https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1_page_nkar.jpg?v=1790166163")
-        center / cover fixed;
-}
-
-.rsvp-form {
-
-    max-width: 720px;
-
-    margin: 50px auto 0;
-
-    background: rgba(255,255,255,.72);
-
-    padding: clamp(25px, 5vw, 60px);
-
-    border: 1px solid rgba(89,21,44,.15);
-
-    box-shadow:
-        0 25px 70px rgba(50,30,20,.12);
-}
-
-.form-group {
-
-    margin-bottom: 30px;
-}
-
-.form-label {
-
-    display: block;
-
-    margin-bottom: 10px;
-
-    color: var(--burgundy);
-
-    font-size: 17px;
-
-    font-weight: 600;
-}
-
-.form-input {
-
-    width: 100%;
-
-    padding: 15px 5px;
-
-    border: 0;
-
-    border-bottom: 1px solid rgba(89,21,44,.3);
-
-    background: transparent;
-
-    color: var(--text);
-
-    font-size: 18px;
-
-    outline: none;
-}
-
-.form-input:focus {
-
-    border-bottom-color: var(--burgundy);
-}
-
-.attendance-options {
-
-    display: flex;
-
-    gap: 20px;
-
-    flex-wrap: wrap;
-}
-
-.option-card {
-
-    position: relative;
-
-    flex: 1;
-
-    min-width: 130px;
-}
-
-.option-card input {
-
-    position: absolute;
-
-    opacity: 0;
-}
-
-.option-card label {
-
-    display: block;
-
-    padding: 15px;
-
-    text-align: center;
-
-    border: 1px solid rgba(89,21,44,.25);
-
-    cursor: pointer;
-
-    transition: .3s ease;
-
-    color: var(--burgundy);
-}
-
-.option-card input:checked + label {
-
-    background: var(--burgundy);
-
-    color: white;
-
-    border-color: var(--burgundy);
-}
-
-
-/*
-Event checkboxes
-*/
-
-.event-options {
-
-    display: grid;
-
-    gap: 12px;
-}
-
-.event-option {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 15px;
-
-    background: rgba(255,255,255,.6);
-
-    border: 1px solid rgba(89,21,44,.15);
-
-    cursor: pointer;
-}
-
-.event-option input {
-
-    width: 18px;
-    height: 18px;
-
-    accent-color: var(--burgundy);
-}
-
-
-/*
-Submit
-*/
-
-.submit-button {
-
-    width: 100%;
-
-    padding: 18px;
-
-    border: 0;
-
-    background: var(--burgundy);
-
-    color: white;
-
-    font-size: 16px;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-
-    transition: .3s ease;
-}
-
-.submit-button:hover {
-
-    background: var(--burgundy-dark);
-
-    transform: translateY(-2px);
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.footer {
-
-    padding: 80px 20px;
-
-    background: var(--khaki-dark);
-
-    color: white;
-
-    text-align: center;
-}
-
-.footer-names {
-
-    font-size: 50px;
-
-    color: #ecd69e;
-
-    font-style: italic;
-}
-
-.footer p {
-
-    font-size: 16px;
-
-    letter-spacing: 2px;
-}
-
-
-/* =========================================================
-   LANGUAGE CONTENT
-========================================================= */
-
-.lang {
-    display: none;
-}
-
-.lang.active {
-    display: block;
-}
-
-
-/*
-Form elements need special handling
-*/
-
-[data-lang] {
-    display: none;
-}
-
-body.lang-hy [data-lang="hy"],
-body.lang-en [data-lang="en"],
-body.lang-ru [data-lang="ru"] {
-    display: inline;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 700px) {
-
-    .language-switcher {
-        top: 12px;
-        right: 12px;
-    }
-
-    .envelope {
-        width: 100vw;
-        height: 100vh;
-        height: 100svh;
-        border-radius: 0;
-    }
-
-    .seal-button {
-        width: 90px;
-        height: 90px;
-    }
-
-    .seal-light {
-        width: 125px;
-        height: 125px;
-    }
-
-    .schedule {
-        grid-template-columns: 1fr;
-    }
-
-    .schedule-card {
-        min-height: 390px;
-    }
-
-    .section {
-        padding: 80px 18px;
-    }
-
-    .scratch-group,
-    .scratch-box {
-        width: 105px;
-    }
-
-    .scratch-box {
-        height: 105px;
-    }
-
-    .scratch-label {
-        font-size: 11px;
-        letter-spacing: 2px;
-    }
-
-    .date-hidden {
-        font-size: 17px;
-    }
-
-    .color-circle {
-        width: 85px;
-        height: 85px;
-    }
-
-}
-
-
-/* =========================================================
-   FADE ANIMATION
-========================================================= */
-
-.reveal {
-
-    opacity: 0;
-
-    transform: translateY(30px);
-
-    transition:
-        opacity 1s ease,
-        transform 1s ease;
-}
-
-.reveal.visible {
-
-    opacity: 1;
-
-    transform: translateY(0);
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anahit & Arsen - Wedding Invitation</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Noto+Sans+Armenian:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --khaki: #C3B091;
+            --burgundy: #800020;
+            --beige: #F5F5DC;
+            --gold: #D4AF37;
+            --dark-text: #2c1810;
+        }
+
+        body {
+            font-family: 'Noto Sans Armenian', sans-serif;
+            background-color: var(--beige);
+            overflow-x: hidden;
+            color: var(--dark-text);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+        }
+
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Envelope Styles */
+        #envelope-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0e6d2;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 90vw;
+            max-width: 600px;
+            aspect-ratio: 3/4;
+            perspective: 1000px;
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1fe00499da93f36a28fba4a86e034bf4.jpg?v=1790166233');
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%; /* Approximate flap height */
+            background-image: url('https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1fe00499da93f36a28fba4a86e034bf4.jpg?v=1790166233');
+            background-size: cover;
+            background-position: top center;
+            transform-origin: top;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 60%, 0 100%); /* Simple triangle approximation if image doesn't match perfectly, but we rely on image */
+            /* Better approach for image based flap: use the top part of the image and rotate */
+            background-position: center top; 
+        }
+
+        /* The seal/button area */
+        .seal-area {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            z-index: 30;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .seal-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            animation: pulse-seal 2s infinite;
+        }
+
+        @keyframes pulse-seal {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* Light effect */
+        .light-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,215,0,0.5) 40%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 25;
+            transition: width 1s ease-out, height 1s ease-out, opacity 1s ease-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Opening Animation Classes */
+        .envelope-open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 5;
+        }
+
+        .envelope-open .light-overlay {
+            width: 200vmax;
+            height: 200vmax;
+            opacity: 1;
+        }
+
+        .envelope-open .envelope-body {
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 1.5s ease-in-out 1s, opacity 1s ease-in-out 1s;
+        }
+        
+        .envelope-open .seal-area {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Scratch Card */
+        .scratch-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            border: 2px solid var(--burgundy);
+            background: white;
+            overflow: hidden;
+        }
+
+        .scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            z-index: 2;
+        }
+
+        .scratch-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--burgundy);
+            font-size: 1.2rem;
+            z-index: 1;
+            user-select: none;
+        }
+
+        /* Language Switcher */
+        .lang-btn {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid var(--burgundy);
+            background: transparent;
+            color: var(--burgundy);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            background: var(--burgundy);
+            color: white;
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--burgundy);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Fade In Animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--beige);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--burgundy);
+            border-radius: 4px;
+        }
+    </style>
 </head>
+<body class="antialiased">
 
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <!-- Using a royalty free waltz placeholder as specific file wasn't provided, but user asked for "interesting wedding waltz" -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a7346b.mp3?filename=waltz-of-the-flowers-11397.mp3" type="audio/mpeg">
+    </audio>
 
-<body class="lang-hy">
-
-
-<!-- =======================================================
-     LANGUAGE SWITCHER
-======================================================= -->
-
-<div class="language-switcher">
-
-    <button class="active" data-language="hy">
-        ՀԱՅ
-    </button>
-
-    <button data-language="en">
-        EN
-    </button>
-
-    <button data-language="ru">
-        RU
-    </button>
-
-</div>
-
-
-<!-- =======================================================
-     MUSIC
-======================================================= -->
-
-<audio id="weddingMusic" loop preload="auto">
-
-    <!--
-    IMPORTANT:
-    Put your music file inside your GitHub repository:
-
-    /music/wedding-waltz.mp3
-
-    Then this path will work.
-    -->
-
-    <source src="music/wedding-waltz.mp3" type="audio/mpeg">
-
-</audio>
-
-<button class="music-control" id="musicButton" aria-label="Music">
-
-    <span class="music-icon" id="musicIcon">
-        ♪
-    </span>
-
-</button>
-
-
-<!-- =======================================================
-     ENVELOPE
-======================================================= -->
-
-<section id="envelope-screen">
-
-    <div class="envelope-wrapper">
-
-        <div class="envelope" id="envelope">
-
-            <!-- Inside invitation -->
-            <div class="inside-card">
-
-                <div>
-                    <!-- intentionally subtle -->
-                </div>
-
-            </div>
-
-
-            <!-- Envelope flap -->
-
-            <div class="envelope-flap" id="envelopeFlap"></div>
-
-
-            <!-- Rotating light -->
-
-            <div class="seal-light"></div>
-
-
-            <!-- Light spreading -->
-
-            <div class="light-spread"></div>
-
-
-            <!-- Seal -->
-
-            <button
-                class="seal-button"
-                id="openEnvelope"
-                aria-label="Open invitation"
-            >
-
-                <span class="seal-initials">
-                    A & A
-                </span>
-
-            </button>
-
-
-            <div class="envelope-hint">
-
-                <span data-lang="hy">
-                    ՀՊՎԵՔ ԿՆՔԻՆ
-                </span>
-
-                <span data-lang="en">
-                    TOUCH THE SEAL
-                </span>
-
-                <span data-lang="ru">
-                    КОСНИТЕСЬ ПЕЧАТИ
-                </span>
-
-            </div>
-
-        </div>
-
+    <!-- Music Control -->
+    <div class="music-control" onclick="toggleMusic()">
+        <svg id="music-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
     </div>
 
-</section>
-
-
-<!-- =======================================================
-     MAIN WEBSITE
-======================================================= -->
-
-<main id="mainInvitation">
-
-
-<!-- =======================================================
-     HERO
-======================================================= -->
-
-<section class="hero">
-
-    <img
-        class="hero-image"
-        src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1_page_nkar.jpg?v=1790166163"
-        alt="Anahit and Arsen"
-    >
-
-    <div class="hero-content">
-
-        <div class="hero-small">
-
-            <span data-lang="hy">
-                ՀԱՐՍԱՆՅԱՑ ՀՐԱՎԵՐ
-            </span>
-
-            <span data-lang="en">
-                WEDDING INVITATION
-            </span>
-
-            <span data-lang="ru">
-                СВАДЕБНОЕ ПРИГЛАШЕНИЕ
-            </span>
-
+    <!-- Envelope Overlay -->
+    <div id="envelope-container">
+        <div class="envelope-wrapper">
+            <div class="envelope-body"></div>
+            <div class="envelope-flap"></div>
+            <div class="light-overlay"></div>
+            <div class="seal-area" onclick="openEnvelope()">
+                <div class="seal-glow"></div>
+                <!-- Seal Icon/Image -->
+                <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/photo_2026-09-23_16-23-12.jpg?v=1790166243" alt="Seal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; opacity: 0.8;">
+            </div>
         </div>
-
-
-        <h1>
-
-            <span data-lang="hy">
-                Հարսանեկան հրավեր
-            </span>
-
-            <span data-lang="en">
-                Wedding Invitation
-            </span>
-
-            <span data-lang="ru">
-                Свадебное приглашение
-            </span>
-
-        </h1>
-
-
-        <div class="hero-names">
-
-            Anahit & Arsen
-
-        </div>
-
-
-        <div class="hero-date">
-
-            <span data-lang="hy">
-                Ձեր ներկայությունը կամբողջացնի մեր օրը
-            </span>
-
-            <span data-lang="en">
-                Grace our day with your presence
-            </span>
-
-            <span data-lang="ru">
-                Разделите с нами этот особенный день
-            </span>
-
-        </div>
-
     </div>
 
-</section>
-
-
-<!-- =======================================================
-     DATE
-======================================================= -->
-
-<section class="section date-section">
-
-    <div class="section-inner">
-
-        <h2 class="section-title">
-
-            <span data-lang="hy">
-                Հարսանիքի ամսաթիվը
-            </span>
-
-            <span data-lang="en">
-                Wedding Date
-            </span>
-
-            <span data-lang="ru">
-                Дата свадьбы
-            </span>
-
-        </h2>
-
-
-        <p class="date-intro">
-
-            <span data-lang="hy">
-                Մատով քերծեք քառակուսիները՝ մեր օրվա ամսաթիվը բացահայտելու համար։
-            </span>
-
-            <span data-lang="en">
-                Scratch the squares to reveal our special date.
-            </span>
-
-            <span data-lang="ru">
-                Сотрите покрытие, чтобы узнать дату нашего особенного дня.
-            </span>
-
-        </p>
-
-
-        <div class="scratch-date">
-
-
-            <!-- DAY -->
-
-            <div class="scratch-group">
-
-                <div class="scratch-box">
-
-                    <div class="date-hidden">
-                        8
-                    </div>
-
-                    <canvas class="scratch-canvas"></canvas>
-
-                </div>
-
-                <div class="scratch-label">
-
-                    <span data-lang="hy">Օր</span>
-                    <span data-lang="en">Day</span>
-                    <span data-lang="ru">День</span>
-
-                </div>
-
+    <!-- Main Content -->
+    <main id="main-content" class="hidden max-w-4xl mx-auto bg-white shadow-2xl min-h-screen relative">
+        
+        <!-- Header Image -->
+        <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
+            <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1_page_nkar.jpg?v=1790166163" alt="Couple" class="w-full h-full object-cover object-top">
+            <div class="absolute inset-0 bg-black/20 flex flex-col justify-center items-center text-center p-4">
+                <h1 class="text-4xl md:text-6xl text-white font-script mb-4 drop-shadow-lg" data-key="invitation_title">Wedding Invitation</h1>
+                <h2 class="text-5xl md:text-7xl text-white font-serif mb-6 drop-shadow-lg tracking-wider" data-key="couple_names">Anahit & Arsen</h2>
+                <p class="text-xl md:text-2xl text-white font-light italic drop-shadow-md" data-key="grace_presence">Grace our day with your presence</p>
             </div>
-
-
-            <!-- MONTH -->
-
-            <div class="scratch-group">
-
-                <div class="scratch-box">
-
-                    <div class="date-hidden">
-
-                        <span data-lang="hy">
-                            Հոկտեմբեր
-                        </span>
-
-                        <span data-lang="en">
-                            October
-                        </span>
-
-                        <span data-lang="ru">
-                            Октябрь
-                        </span>
-
-                    </div>
-
-                    <canvas class="scratch-canvas"></canvas>
-
-                </div>
-
-                <div class="scratch-label">
-
-                    <span data-lang="hy">Ամիս</span>
-                    <span data-lang="en">Month</span>
-                    <span data-lang="ru">Месяц</span>
-
-                </div>
-
-            </div>
-
-
-            <!-- YEAR -->
-
-            <div class="scratch-group">
-
-                <div class="scratch-box">
-
-                    <div class="date-hidden">
-                        2027
-                    </div>
-
-                    <canvas class="scratch-canvas"></canvas>
-
-                </div>
-
-                <div class="scratch-label">
-
-                    <span data-lang="hy">Տարի</span>
-                    <span data-lang="en">Year</span>
-                    <span data-lang="ru">Год</span>
-
-                </div>
-
-            </div>
-
         </div>
 
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     SCHEDULE
-======================================================= -->
-
-<section class="section">
-
-    <div class="section-inner">
-
-        <h2 class="section-title">
-
-            <span data-lang="hy">
-                Մեր օրվա ծրագիրը
-            </span>
-
-            <span data-lang="en">
-                Our Wedding Day
-            </span>
-
-            <span data-lang="ru">
-                Программа нашего дня
-            </span>
-
-        </h2>
-
-
-        <p class="section-subtitle">
-
-            <span data-lang="hy">
-                Սիրով սպասում ենք Ձեզ մեր կյանքի ամենակարևոր օրվա յուրաքանչյուր պահը միասին կիսելու։
-            </span>
-
-            <span data-lang="en">
-                We would love to share every meaningful moment of our special day with you.
-            </span>
-
-            <span data-lang="ru">
-                Мы будем рады разделить с вами каждый важный момент нашего особенного дня.
-            </span>
-
-        </p>
-
-
-        <div class="schedule">
-
-
-            <!-- 11:00 -->
-
-            <article class="schedule-card">
-
-                <img
-                    src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1_page_nkar.jpg?v=1790166163"
-                    alt="Bride's home"
-                >
-
-                <div class="schedule-content">
-
-                    <div class="schedule-time">
-                        11:00
+        <!-- Date Section -->
+        <section class="py-16 px-4 text-center bg-[#FDFBF7] fade-in-section">
+            <h3 class="text-3xl text-[#800020] mb-12 uppercase tracking-widest" data-key="wedding_date">Wedding Date</h3>
+            
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16">
+                <!-- Day -->
+                <div class="flex flex-col items-center">
+                    <div class="scratch-container rounded-lg shadow-inner">
+                        <div class="scratch-content">08</div>
+                        <canvas class="scratch-canvas" width="100" height="100"></canvas>
                     </div>
+                    <span class="mt-4 text-lg font-semibold text-[#800020]" data-key="day">Day</span>
+                </div>
+                
+                <!-- Month -->
+                <div class="flex flex-col items-center">
+                    <div class="scratch-container rounded-lg shadow-inner">
+                        <div class="scratch-content">10</div>
+                        <canvas class="scratch-canvas" width="100" height="100"></canvas>
+                    </div>
+                    <span class="mt-4 text-lg font-semibold text-[#800020]" data-key="month">Month</span>
+                </div>
 
-                    <h3>
+                <!-- Year -->
+                <div class="flex flex-col items-center">
+                    <div class="scratch-container rounded-lg shadow-inner">
+                        <div class="scratch-content">2027</div>
+                        <canvas class="scratch-canvas" width="100" height="100"></canvas>
+                    </div>
+                    <span class="mt-4 text-lg font-semibold text-[#800020]" data-key="year">Year</span>
+                </div>
+            </div>
+        </section>
 
-                        <span data-lang="hy">
-                            Հարսի տուն
-                        </span>
+        <!-- Schedule Section -->
+        <section class="py-16 px-4 bg-[#F5F5DC] fade-in-section">
+            <h3 class="text-3xl text-[#800020] text-center mb-12 uppercase tracking-widest" data-key="schedule_title">Wedding Schedule</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Event 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
+                    <div class="w-full h-48 mb-4 overflow-hidden rounded">
+                         <!-- Placeholder for Bride's Home -->
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="Bride's Home" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-[#800020] mb-2">11:00</h4>
+                    <p class="text-gray-700" data-key="event_bride_home">Bride's home</p>
+                </div>
 
-                        <span data-lang="en">
-                            Bride's Home
-                        </span>
+                <!-- Event 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
+                    <div class="w-full h-48 mb-4 overflow-hidden rounded">
+                        <!-- Placeholder for Church -->
+                        <img src="https://images.unsplash.com/photo-1544078751-58fee6d8a00e?auto=format&fit=crop&q=80&w=800" alt="Church" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-[#800020] mb-2">15:15</h4>
+                    <p class="text-gray-700" data-key="event_church">Wedding ceremony at St. Hripsime Church</p>
+                </div>
 
-                        <span data-lang="ru">
-                            Дом невесты
-                        </span>
+                <!-- Event 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
+                    <div class="w-full h-48 mb-4 overflow-hidden rounded">
+                        <!-- Placeholder for Reception -->
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Reception" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-[#800020] mb-2">17:30</h4>
+                    <p class="text-gray-700" data-key="event_guest_reception">Guest reception</p>
+                </div>
 
-                    </h3>
+                <!-- Event 4 -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
+                    <div class="w-full h-48 mb-4 overflow-hidden rounded">
+                        <!-- Placeholder for Restaurant -->
+                        <img src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800" alt="Restaurant" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-[#800020] mb-2">18:00</h4>
+                    <p class="text-gray-700" data-key="event_dinner">Wedding reception at Dvin Restaurant</p>
+                </div>
+            </div>
+        </section>
 
-                    <p>
+        <!-- Dress Code Section -->
+        <section class="py-16 px-4 bg-white fade-in-section">
+            <h3 class="text-3xl text-[#800020] text-center mb-8 uppercase tracking-widest" data-key="dress_code_title">Dress Code</h3>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
+                <div class="w-64 h-80 shadow-lg rounded-lg overflow-hidden relative group">
+                    <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/download.png?v=1790166266" alt="Dress Code 1" class="w-full h-full object-cover">
+                </div>
+                <div class="w-64 h-80 shadow-lg rounded-lg overflow-hidden relative group">
+                    <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/download_3.png?v=1790166265" alt="Dress Code 2" class="w-full h-full object-cover">
+                </div>
+            </div>
 
-                        <span data-lang="hy">
-                            Հավաքվում ենք հարսի տանը
-                        </span>
-
-                        <span data-lang="en">
-                            Gathering at the bride's home
-                        </span>
-
-                        <span data-lang="ru">
-                            Сбор гостей в доме невесты
-                        </span>
-
+            <div class="text-center max-w-2xl mx-auto">
+                <p class="text-lg mb-4 text-gray-700" data-key="dress_code_colors_desc">Please adhere to the following color palette:</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <span class="px-4 py-2 bg-[#C3B091] text-white rounded-full shadow-sm">Khaki</span>
+                    <span class="px-4 py-2 bg-[#800020] text-white rounded-full shadow-sm">Burgundy</span>
+                    <span class="px-4 py-2 bg-[#F5F5DC] text-[#800020] border border-[#800020] rounded-full shadow-sm">Beige</span>
+                </div>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 text-left">
+                    <p class="text-red-700 font-semibold" data-key="no_white_request">
+                        Kindly request: Please do not wear white on our wedding day.
                     </p>
+                </div>
+            </div>
+        </section>
 
+        <!-- RSVP Section -->
+        <section class="py-16 px-4 bg-[#FDFBF7] fade-in-section">
+            <h3 class="text-4xl text-[#800020] text-center mb-2 font-script" data-key="join_celebration">JOIN OUR CELEBRATION</h3>
+            <p class="text-center text-gray-500 mb-12 italic" data-key="rsvp_subtitle">We would be honored by your presence</p>
+
+            <form id="rsvp-form" class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-[#C3B091]">
+                
+                <!-- Name -->
+                <div class="mb-6">
+                    <label class="block text-[#800020] font-bold mb-2" for="guest-name" data-key="label_name">Full Name</label>
+                    <input type="text" id="guest-name" required class="w-full px-4 py-2 border-b-2 border-[#C3B091] focus:border-[#800020] outline-none bg-transparent transition" placeholder="...">
                 </div>
 
-            </article>
-
-
-            <!-- 15:15 -->
-
-            <article class="schedule-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1548625361-58a5b3c7f9f1?auto=format&fit=crop&w=1200&q=85"
-                    alt="Church ceremony"
-                >
-
-                <div class="schedule-content">
-
-                    <div class="schedule-time">
-                        15:15
-                    </div>
-
-                    <h3>
-
-                        <span data-lang="hy">
-                            Պսակադրություն
-                        </span>
-
-                        <span data-lang="en">
-                            Wedding Ceremony
-                        </span>
-
-                        <span data-lang="ru">
-                            Венчание
-                        </span>
-
-                    </h3>
-
-                    <p>
-                        St. Hripsime Church
-                    </p>
-
-                </div>
-
-            </article>
-
-
-            <!-- 17:30 -->
-
-            <article class="schedule-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=85"
-                    alt="Guest reception"
-                >
-
-                <div class="schedule-content">
-
-                    <div class="schedule-time">
-                        17:30
-                    </div>
-
-                    <h3>
-
-                        <span data-lang="hy">
-                            Հյուրերի ընդունելություն
-                        </span>
-
-                        <span data-lang="en">
-                            Guest Reception
-                        </span>
-
-                        <span data-lang="ru">
-                            Встреча гостей
-                        </span>
-
-                    </h3>
-
-                    <p>
-
-                        <span data-lang="hy">
-                            Հյուրերի հավաք
-                        </span>
-
-                        <span data-lang="en">
-                            Welcome & gathering
-                        </span>
-
-                        <span data-lang="ru">
-                            Встреча гостей
-                        </span>
-
-                    </p>
-
-                </div>
-
-            </article>
-
-
-            <!-- 18:00 -->
-
-            <article class="schedule-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=85"
-                    alt="Wedding reception"
-                >
-
-                <div class="schedule-content">
-
-                    <div class="schedule-time">
-                        18:00
-                    </div>
-
-                    <h3>
-
-                        <span data-lang="hy">
-                            Հարսանեկան խնջույք
-                        </span>
-
-                        <span data-lang="en">
-                            Wedding Reception
-                        </span>
-
-                        <span data-lang="ru">
-                            Свадебный приём
-                        </span>
-
-                    </h3>
-
-                    <p>
-                        Dvin Restaurant
-                    </p>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     DRESS CODE
-======================================================= -->
-
-<section class="section dress-code">
-
-    <div class="section-inner">
-
-        <h2 class="section-title">
-
-            <span data-lang="hy">
-                Dress Code
-            </span>
-
-            <span data-lang="en">
-                Dress Code
-            </span>
-
-            <span data-lang="ru">
-                Дресс-код
-            </span>
-
-        </h2>
-
-
-        <p class="section-subtitle">
-
-            <span data-lang="hy">
-                Մեր հարսանեկան օրվա գունային տրամադրությունը՝ նուրբ, հարուստ և էլեգանտ երանգներով։
-            </span>
-
-            <span data-lang="en">
-                Our wedding palette is inspired by elegant, warm and sophisticated tones.
-            </span>
-
-            <span data-lang="ru">
-                Палитра нашего свадебного дня — элегантные, тёплые и благородные оттенки.
-            </span>
-
-        </p>
-
-
-        <div class="color-palette">
-
-
-            <!-- MERLOT -->
-
-            <div class="color-item">
-
-                <div class="color-circle color-merlot"></div>
-
-                <span>
-
-                    <span data-lang="hy">
-                        Մեռլո
-                    </span>
-
-                    <span data-lang="en">
-                        Merlot
-                    </span>
-
-                    <span data-lang="ru">
-                        Мерло
-                    </span>
-
-                </span>
-
-            </div>
-
-
-            <!-- KHAKI -->
-
-            <div class="color-item">
-
-                <div class="color-circle color-khaki"></div>
-
-                <span>
-
-                    <span data-lang="hy">
-                        Խակի
-                    </span>
-
-                    <span data-lang="en">
-                        Khaki
-                    </span>
-
-                    <span data-lang="ru">
-                        Хаки
-                    </span>
-
-                </span>
-
-            </div>
-
-
-            <!-- BEIGE -->
-
-            <div class="color-item">
-
-                <div class="color-circle color-beige"></div>
-
-                <span>
-
-                    <span data-lang="hy">
-                        Բեժ
-                    </span>
-
-                    <span data-lang="en">
-                        Beige
-                    </span>
-
-                    <span data-lang="ru">
-                        Бежевый
-                    </span>
-
-                </span>
-
-            </div>
-
-
-            <!-- COFFEE -->
-
-            <div class="color-item">
-
-                <div class="color-circle color-coffee"></div>
-
-                <span>
-
-                    <span data-lang="hy">
-                        Սուրճի
-                    </span>
-
-                    <span data-lang="en">
-                        Coffee
-                    </span>
-
-                    <span data-lang="ru">
-                        Кофейный
-                    </span>
-
-                </span>
-
-            </div>
-
-
-            <!-- ROSE -->
-
-            <div class="color-item">
-
-                <div class="color-circle color-rose"></div>
-
-                <span>
-
-                    <span data-lang="hy">
-                        Փոշոտ վարդագույն
-                    </span>
-
-                    <span data-lang="en">
-                        Dusty Rose
-                    </span>
-
-                    <span data-lang="ru">
-                        Пыльно-розовый
-                    </span>
-
-                </span>
-
-            </div>
-
-
-            <!-- OLIVE -->
-
-            <div class="color-item">
-
-                <div class="color-circle color-olive"></div>
-
-                <span>
-
-                    <span data-lang="hy">
-                        Ձիթապտղի
-                    </span>
-
-                    <span data-lang="en">
-                        Olive
-                    </span>
-
-                    <span data-lang="ru">
-                        Оливковый
-                    </span>
-
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- NO WHITE -->
-
-        <div class="no-white">
-
-            <h3>
-
-                <span data-lang="hy">
-                    Խնդրում ենք չկրել սպիտակ
-                </span>
-
-                <span data-lang="en">
-                    Please Leave White to the Bride
-                </span>
-
-                <span data-lang="ru">
-                    Пожалуйста, не надевайте белое
-                </span>
-
-            </h3>
-
-
-            <p>
-
-                <span data-lang="hy">
-                    Սիրով խնդրում ենք մեր հյուրերին հարսանիքի օրը չկրել սպիտակ գույնի հագուստ, որպեսզի այդ գույնը մնա հարսի համար։
-                </span>
-
-                <span data-lang="en">
-                    We kindly ask our guests not to wear white on our wedding day, so this special color can remain with the bride.
-                </span>
-
-                <span data-lang="ru">
-                    Мы с любовью просим гостей не выбирать белый цвет для наряда в день нашей свадьбы, чтобы этот особенный цвет остался за невестой.
-                </span>
-
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     RSVP
-======================================================= -->
-
-<section class="section rsvp">
-
-    <div class="section-inner">
-
-        <h2 class="section-title">
-
-            <span data-lang="hy">
-                JOIN OUR CELEBRATION
-            </span>
-
-            <span data-lang="en">
-                JOIN OUR CELEBRATION
-            </span>
-
-            <span data-lang="ru">
-                JOIN OUR CELEBRATION
-            </span>
-
-        </h2>
-
-
-        <p class="section-subtitle">
-
-            <span data-lang="hy">
-                Խնդրում ենք հաստատել Ձեր մասնակցությունը։
-            </span>
-
-            <span data-lang="en">
-                Please let us know if you will be joining us.
-            </span>
-
-            <span data-lang="ru">
-                Пожалуйста, подтвердите своё присутствие.
-            </span>
-
-        </p>
-
-
-        <!--
-        Replace YOUR_FORMSPREE_ID with your actual Formspree ID.
-
-        Example:
-        https://formspree.io/f/xabcdefg
-        -->
-
-        <form
-            class="rsvp-form"
-            action="https://formspree.io/f/YOUR_FORMSPREE_ID"
-            method="POST"
-        >
-
-
-            <!-- FULL NAME -->
-
-            <div class="form-group">
-
-                <label class="form-label">
-
-                    <span data-lang="hy">
-                        Անուն Ազգանուն
-                    </span>
-
-                    <span data-lang="en">
-                        Full Name
-                    </span>
-
-                    <span data-lang="ru">
-                        Имя и фамилия
-                    </span>
-
-                </label>
-
-                <input
-                    class="form-input"
-                    type="text"
-                    name="guest_name"
-                    required
-                    placeholder=""
-                >
-
-            </div>
-
-
-            <!-- ATTENDING -->
-
-            <div class="form-group">
-
-                <label class="form-label">
-
-                    <span data-lang="hy">
-                        Կմասնակցե՞ք մեր հարսանիքին։
-                    </span>
-
-                    <span data-lang="en">
-                        Will you be attending?
-                    </span>
-
-                    <span data-lang="ru">
-                        Вы будете присутствовать?
-                    </span>
-
-                </label>
-
-
-                <div class="attendance-options">
-
-
-                    <div class="option-card">
-
-                        <input
-                            type="radio"
-                            id="yes"
-                            name="attendance"
-                            value="Yes"
-                            required
-                        >
-
-                        <label for="yes">
-
-                            <span data-lang="hy">
-                                Այո
-                            </span>
-
-                            <span data-lang="en">
-                                Yes
-                            </span>
-
-                            <span data-lang="ru">
-                                Да
-                            </span>
-
+                <!-- Attendance -->
+                <div class="mb-6">
+                    <label class="block text-[#800020] font-bold mb-2" data-key="label_attend">Will you be attending?</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="attendance" value="yes" class="mr-2 accent-[#800020]" checked>
+                            <span data-key="opt_yes">Yes</span>
                         </label>
-
-                    </div>
-
-
-                    <div class="option-card">
-
-                        <input
-                            type="radio"
-                            id="no"
-                            name="attendance"
-                            value="No"
-                        >
-
-                        <label for="no">
-
-                            <span data-lang="hy">
-                                Ոչ
-                            </span>
-
-                            <span data-lang="en">
-                                No
-                            </span>
-
-                            <span data-lang="ru">
-                                Нет
-                            </span>
-
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="attendance" value="no" class="mr-2 accent-[#800020]">
+                            <span data-key="opt_no">No</span>
                         </label>
-
                     </div>
-
                 </div>
 
-            </div>
-
-
-            <!-- NUMBER OF GUESTS -->
-
-            <div class="form-group">
-
-                <label class="form-label">
-
-                    <span data-lang="hy">
-                        Քանի՞ ուղեկցող հյուր կունենաք։
-                    </span>
-
-                    <span data-lang="en">
-                        Number of accompanying guests
-                    </span>
-
-                    <span data-lang="ru">
-                        Количество сопровождающих гостей
-                    </span>
-
-                </label>
-
-                <input
-                    class="form-input"
-                    type="number"
-                    name="additional_guests"
-                    min="0"
-                    step="1"
-                    value="0"
-                >
-
-            </div>
-
-
-            <!-- EVENT ATTENDANCE -->
-
-            <div class="form-group">
-
-                <label class="form-label">
-
-                    <span data-lang="hy">
-                        Ո՞ր հատվածներին եք մասնակցելու։
-                    </span>
-
-                    <span data-lang="en">
-                        Which parts of the event will you attend?
-                    </span>
-
-                    <span data-lang="ru">
-                        Какие части мероприятия вы посетите?
-                    </span>
-
-                </label>
-
-
-                <div class="event-options">
-
-
-                    <label class="event-option">
-
-                        <input
-                            type="checkbox"
-                            name="events[]"
-                            value="Bride's Home"
-                        >
-
-                        <span data-lang="hy">
-                            Հարսի տուն
-                        </span>
-
-                        <span data-lang="en">
-                            Bride's Home
-                        </span>
-
-                        <span data-lang="ru">
-                            Дом невесты
-                        </span>
-
-                    </label>
-
-
-                    <label class="event-option">
-
-                        <input
-                            type="checkbox"
-                            name="events[]"
-                            value="Church"
-                        >
-
-                        <span data-lang="hy">
-                            Եկեղեցի
-                        </span>
-
-                        <span data-lang="en">
-                            Church
-                        </span>
-
-                        <span data-lang="ru">
-                            Церковь
-                        </span>
-
-                    </label>
-
-
-                    <label class="event-option">
-
-                        <input
-                            type="checkbox"
-                            name="events[]"
-                            value="Wedding Reception"
-                        >
-
-                        <span data-lang="hy">
-                            Հարսանեկան խնջույք
-                        </span>
-
-                        <span data-lang="en">
-                            Wedding Reception
-                        </span>
-
-                        <span data-lang="ru">
-                            Свадебный приём
-                        </span>
-
-                    </label>
-
+                <!-- Guests Count -->
+                <div class="mb-6">
+                    <label class="block text-[#800020] font-bold mb-2" for="guest-count" data-key="label_guests">Number of accompanying guests</label>
+                    <input type="number" id="guest-count" min="0" value="0" class="w-full px-4 py-2 border border-[#C3B091] rounded focus:border-[#800020] outline-none">
                 </div>
 
-            </div>
-
-
-            <!-- OPTIONAL MESSAGE -->
-
-            <div class="form-group">
-
-                <label class="form-label">
-
-                    <span data-lang="hy">
-                        Հաղորդագրություն
-                    </span>
-
-                    <span data-lang="en">
-                        Message
-                    </span>
-
-                    <span data-lang="ru">
-                        Сообщение
-                    </span>
-
-                </label>
-
-                <textarea
-                    class="form-input"
-                    name="message"
-                    rows="3"
-                ></textarea>
-
-            </div>
-
-
-            <!-- SUBMIT -->
-
-            <button
-                class="submit-button"
-                type="submit"
-            >
-
-                <span data-lang="hy">
-                    Հաստատել մասնակցությունը
-                </span>
-
-                <span data-lang="en">
-                    Submit RSVP
-                </span>
-
-                <span data-lang="ru">
-                    Подтвердить участие
-                </span>
-
-            </button>
-
-        </form>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     FOOTER
-======================================================= -->
-
-<footer class="footer">
-
-    <div class="footer-names">
-        Anahit & Arsen
-    </div>
-
-    <p>
-        08 · 10 · 2027
-    </p>
-
-    <p>
-
-        <span data-lang="hy">
-            Սիրով՝ Անահիտ և Արսեն
-        </span>
-
-        <span data-lang="en">
-            With love, Anahit & Arsen
-        </span>
-
-        <span data-lang="ru">
-            С любовью, Анахит и Арсен
-        </span>
-
-    </p>
-
-</footer>
-
-
-</main>
-
-
-<script>
-
-/* =========================================================
-   ENVELOPE OPENING
-========================================================= */
-
-const openButton = document.getElementById("openEnvelope");
-const envelopeScreen = document.getElementById("envelope-screen");
-const envelope = document.getElementById("envelope");
-
-const music = document.getElementById("weddingMusic");
-const musicButton = document.getElementById("musicButton");
-const musicIcon = document.getElementById("musicIcon");
-
-let opened = false;
-
-
-/*
-Click the seal
-*/
-
-openButton.addEventListener("click", function() {
-
-    if (opened) return;
-
-    opened = true;
-
-    envelope.classList.add("opening");
-
-    document.body.classList.add("opened");
-
-
-    /*
-    Start music after user interaction.
-    Browsers allow this because the user clicked.
-    */
-
-    music.play()
-        .then(() => {
-
-            musicButton.classList.add("playing");
-
-            musicIcon.textContent = "Ⅱ";
-
-        })
-        .catch(() => {
-
-            console.log("Music file not found or browser blocked playback.");
-
-        });
-
-
-    /*
-    Wait for animation before revealing the main invitation.
-    */
-
-    setTimeout(function() {
-
-        envelopeScreen.classList.add("hide");
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }, 3800);
-
-});
-
-
-/* =========================================================
-   MUSIC CONTROL
-========================================================= */
-
-musicButton.addEventListener("click", function() {
-
-    if (music.paused) {
-
-        music.play()
-            .then(() => {
-
-                musicButton.classList.add("playing");
-
-                musicIcon.textContent = "Ⅱ";
-
+                <!-- Events Selection -->
+                <div class="mb-8">
+                    <label class="block text-[#800020] font-bold mb-2" data-key="label_events">Which parts will you attend?</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="events" value="bride_home" class="mr-2 accent-[#800020]">
+                            <span data-key="event_bride_home_short">Bride's Home (11:00)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="events" value="church" class="mr-2 accent-[#800020]">
+                            <span data-key="event_church_short">Church Ceremony (15:15)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="events" value="reception" class="mr-2 accent-[#800020]">
+                            <span data-key="event_reception_short">Reception (18:00)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-[#800020] text-white font-bold py-3 px-4 rounded hover:bg-[#600018] transition duration-300 shadow-md" data-key="btn_submit">
+                    Submit Response
+                </button>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-[#800020] text-[#F5F5DC] py-8 text-center">
+            <p class="font-script text-2xl">Anahit & Arsen</p>
+            <p class="text-sm mt-2 opacity-75">2027</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- Translations ---
+        const translations = {
+            hy: {
+                invitation_title: "Հարսանիքի Հրավեր",
+                couple_names: "Անահիտ և Արսեն",
+                grace_presence: "Պատվեցեք մեզ ձեր ներկայությամբ",
+                wedding_date: "Հարսանիքի Օրը",
+                day: "Օր",
+                month: "Ամիս",
+                year: "Տարի",
+                schedule_title: "Հարսանիքի Ժամանակացույց",
+                event_bride_home: "11:00 – Հարսնացուի տուն",
+                event_church: "15:15 – Պսակադրություն Սբ. Հռիփսիմե եկեղեցում",
+                event_guest_reception: "17:30 – Հյուրերի ընդունելություն",
+                event_dinner: "18:00 – Հարսանյաց խնջույք Դվին ռեստորանում",
+                dress_code_title: "Հագուստի կոդ",
+                dress_code_colors_desc: "Խնդրում ենք առաջնորդվել հետևյալ գունային գամմայով:",
+                no_white_request: "Խնդրանք. խնդրում ենք հարսանիքի օրը սպիտակ չհագնել։",
+                join_celebration: "ՄԻԱՑԵՔ ՄԵՐ ՏՈՆԱԽՄԲՈՒԹՅԱՆԸ",
+                rsvp_subtitle: "Մեզ համար պատիվ կլինի ձեր ներկայությունը",
+                label_name: "Անուն Ազգանուն",
+                label_attend: "Կմասնակցե՞ք",
+                opt_yes: "Այո",
+                opt_no: "Ոչ",
+                label_guests: "Ուղեկցող անձանց քանակը",
+                label_events: "Որ հատվածներին կմասնակցեք",
+                event_bride_home_short: "Հարսնացուի տուն (11:00)",
+                event_church_short: "Եկեղեցի (15:15)",
+                event_reception_short: "Խնջույք (18:00)",
+                btn_submit: "Հաստատել"
+            },
+            en: {
+                invitation_title: "Wedding Invitation",
+                couple_names: "Anahit & Arsen",
+                grace_presence: "Grace our day with your presence",
+                wedding_date: "Wedding Date",
+                day: "Day",
+                month: "Month",
+                year: "Year",
+                schedule_title: "Wedding Schedule",
+                event_bride_home: "11:00 – Bride's home",
+                event_church: "15:15 – Wedding ceremony at St. Hripsime Church",
+                event_guest_reception: "17:30 – Guest reception",
+                event_dinner: "18:00 – Wedding reception at Dvin Restaurant",
+                dress_code_title: "Dress Code",
+                dress_code_colors_desc: "Please adhere to the following color palette:",
+                no_white_request: "Kindly request: Please do not wear white on our wedding day.",
+                join_celebration: "JOIN OUR CELEBRATION",
+                rsvp_subtitle: "We would be honored by your presence",
+                label_name: "Full Name",
+                label_attend: "Will you be attending?",
+                opt_yes: "Yes",
+                opt_no: "No",
+                label_guests: "Number of accompanying guests",
+                label_events: "Which parts will you attend?",
+                event_bride_home_short: "Bride's Home (11:00)",
+                event_church_short: "Church Ceremony (15:15)",
+                event_reception_short: "Reception (18:00)",
+                btn_submit: "Submit Response"
+            },
+            ru: {
+                invitation_title: "Свадебное Приглашение",
+                couple_names: "Анаит и Арсен",
+                grace_presence: "Украсьте наш день своим присутствием",
+                wedding_date: "Дата Свадьбы",
+                day: "День",
+                month: "Месяц",
+                year: "Год",
+                schedule_title: "Расписание",
+                event_bride_home: "11:00 – Дом невесты",
+                event_church: "15:15 – Венчание в церкви Св. Рипсиме",
+                event_guest_reception: "17:30 – Прием гостей",
+                event_dinner: "18:00 – Свадебный банкет в ресторане Двин",
+                dress_code_title: "Дресс-код",
+                dress_code_colors_desc: "Пожалуйста, придерживайтесь следующей цветовой гаммы:",
+                no_white_request: "Просьба: пожалуйста, не надевайте белое в день нашей свадьбы.",
+                join_celebration: "ПРИСОЕДИНЯЙТЕСЬ К НАШЕМУ ПРАЗДНИКУ",
+                rsvp_subtitle: "Для нас будет честью видеть вас",
+                label_name: "Имя Фамилия",
+                label_attend: "Вы будете присутствовать?",
+                opt_yes: "Да",
+                opt_no: "Нет",
+                label_guests: "Количество сопровождающих лиц",
+                label_events: "Какие части мероприятия вы посетите?",
+                event_bride_home_short: "Дом невесты (11:00)",
+                event_church_short: "Церковь (15:15)",
+                event_reception_short: "Банкет (18:00)",
+                btn_submit: "Отправить ответ"
+            }
+        };
+
+        let currentLang = 'hy';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.dataset.lang === lang) btn.classList.add('active');
             });
 
-    } else {
+            // Update text
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
 
-        music.pause();
-
-        musicButton.classList.remove("playing");
-
-        musicIcon.textContent = "♪";
-
-    }
-
-});
-
-
-/* =========================================================
-   LANGUAGE SWITCHER
-========================================================= */
-
-const languageButtons =
-    document.querySelectorAll("[data-language]");
-
-
-languageButtons.forEach(button => {
-
-    button.addEventListener("click", function() {
-
-        const language =
-            this.getAttribute("data-language");
-
-
-        document.body.classList.remove(
-            "lang-hy",
-            "lang-en",
-            "lang-ru"
-        );
-
-        document.body.classList.add(
-            "lang-" + language
-        );
-
-
-        languageButtons.forEach(btn => {
-            btn.classList.remove("active");
+        // Initialize Language Buttons
+        const langContainer = document.createElement('div');
+        langContainer.className = "fixed top-4 right-4 z-50 flex bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md";
+        ['hy', 'en', 'ru'].forEach(lang => {
+            const btn = document.createElement('button');
+            btn.className = `lang-btn ${lang === 'hy' ? 'active' : ''}`;
+            btn.dataset.lang = lang;
+            btn.textContent = lang.toUpperCase();
+            btn.onclick = () => setLanguage(lang);
+            langContainer.appendChild(btn);
         });
-
-        this.classList.add("active");
-
-
-        document.documentElement.lang =
-            language;
-
-    });
-
-});
+        document.body.appendChild(langContainer);
 
 
-/* =========================================================
-   SCRATCH CARDS
-========================================================= */
+        // --- Envelope Logic ---
+        function openEnvelope() {
+            const container = document.getElementById('envelope-container');
+            const mainContent = document.getElementById('main-content');
+            
+            // Trigger animations
+            container.classList.add('envelope-open');
+            
+            // Play music automatically if allowed by browser (often blocked until interaction)
+            toggleMusic(true);
 
-function setupScratchCard(canvas) {
-
-    const box = canvas.parentElement;
-
-    const ctx = canvas.getContext("2d");
-
-    function resizeCanvas() {
-
-        const rect = box.getBoundingClientRect();
-
-        const ratio = window.devicePixelRatio || 1;
-
-        canvas.width =
-            rect.width * ratio;
-
-        canvas.height =
-            rect.height * ratio;
-
-        canvas.style.width =
-            rect.width + "px";
-
-        canvas.style.height =
-            rect.height + "px";
-
-        ctx.scale(ratio, ratio);
-
-
-        /*
-        Scratch coating.
-        */
-
-        ctx.fillStyle = "#77765a";
-
-        ctx.fillRect(
-            0,
-            0,
-            rect.width,
-            rect.height
-        );
-
-
-        /*
-        Subtle decorative pattern.
-        */
-
-        ctx.fillStyle =
-            "rgba(255,255,255,.08)";
-
-        for (
-            let x = -rect.height;
-            x < rect.width + rect.height;
-            x += 22
-        ) {
-
-            ctx.save();
-
-            ctx.translate(x, 0);
-
-            ctx.rotate(-0.65);
-
-            ctx.fillRect(
-                0,
-                0,
-                2,
-                rect.height * 2
-            );
-
-            ctx.restore();
-
+            setTimeout(() => {
+                container.style.opacity = '0';
+                setTimeout(() => {
+                    container.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    initScratchCards(); // Initialize scratch cards after reveal
+                    observeSections(); // Start fade-in observer
+                }, 1000);
+            }, 2500); // Wait for light and flap animation
         }
 
+        // --- Music Logic ---
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
 
-        /*
-        Scratch instruction.
-        */
-
-        ctx.fillStyle = "rgba(255,255,255,.88)";
-
-        ctx.textAlign = "center";
-
-        ctx.textBaseline = "middle";
-
-        ctx.font =
-            "14px Cormorant Garamond";
-
-        ctx.fillText(
-            "SCRATCH",
-            rect.width / 2,
-            rect.height / 2 - 8
-        );
-
-        ctx.font =
-            "11px Cormorant Garamond";
-
-        ctx.fillText(
-            "HERE",
-            rect.width / 2,
-            rect.height / 2 + 10
-        );
-
-    }
-
-    resizeCanvas();
-
-
-    let scratching = false;
-
-
-    function scratch(e) {
-
-        if (!scratching) return;
-
-
-        const rect =
-            canvas.getBoundingClientRect();
-
-
-        const x =
-            e.clientX - rect.left;
-
-        const y =
-            e.clientY - rect.top;
-
-
-        ctx.globalCompositeOperation =
-            "destination-out";
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y,
-            25,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-    }
-
-
-    canvas.addEventListener(
-        "pointerdown",
-        function(e) {
-
-            scratching = true;
-
-            canvas.setPointerCapture(e.pointerId);
-
-            scratch(e);
-
+        function toggleMusic(forcePlay = false) {
+            if (forcePlay || !isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'; // Pause icon
+                }).catch(e => console.log("Audio play failed (interaction needed):", e));
+            } else {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.innerHTML = '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'; // Play icon
+            }
         }
-    );
 
+        // --- Scratch Card Logic ---
+        function initScratchCards() {
+            const containers = document.querySelectorAll('.scratch-container');
+            
+            containers.forEach(container => {
+                const canvas = container.querySelector('canvas');
+                const ctx = canvas.getContext('2d');
+                const width = container.offsetWidth;
+                const height = container.offsetHeight;
 
-    canvas.addEventListener(
-        "pointermove",
-        scratch
-    );
+                // Set canvas size
+                canvas.width = width;
+                canvas.height = height;
 
+                // Fill with overlay color/image
+                ctx.fillStyle = '#C3B091'; // Khaki color for scratch layer
+                ctx.fillRect(0, 0, width, height);
+                
+                // Add some texture/text to scratch layer
+                ctx.fillStyle = '#800020';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('SCRATCH ME', width/2, height/2);
 
-    canvas.addEventListener(
-        "pointerup",
-        function() {
+                let isDrawing = false;
 
-            scratching = false;
-
-        }
-    );
-
-
-    canvas.addEventListener(
-        "pointercancel",
-        function() {
-
-            scratching = false;
-
-        }
-    );
-
-
-    window.addEventListener(
-        "resize",
-        resizeCanvas
-    );
-
-}
-
-
-document
-    .querySelectorAll(".scratch-canvas")
-    .forEach(setupScratchCard);
-
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-const observer =
-    new IntersectionObserver(
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add(
-                        "visible"
-                    );
-
+                function getPos(e) {
+                    const rect = canvas.getBoundingClientRect();
+                    let clientX, clientY;
+                    if (e.touches) {
+                        clientX = e.touches[0].clientX;
+                        clientY = e.touches[0].clientY;
+                    } else {
+                        clientX = e.clientX;
+                        clientY = e.clientY;
+                    }
+                    return {
+                        x: clientX - rect.left,
+                        y: clientY - rect.top
+                    };
                 }
 
+                function scratch(e) {
+                    if (!isDrawing) return;
+                    e.preventDefault();
+                    const pos = getPos(e);
+                    
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 15, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Mouse events
+                canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+                canvas.addEventListener('mousemove', scratch);
+                canvas.addEventListener('mouseup', () => isDrawing = false);
+                canvas.addEventListener('mouseleave', () => isDrawing = false);
+
+                // Touch events
+                canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+                canvas.addEventListener('touchmove', scratch);
+                canvas.addEventListener('touchend', () => isDrawing = false);
             });
-
-        },
-        {
-            threshold: .15
         }
-    );
 
+        // --- Intersection Observer for Fade In ---
+        function observeSections() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-document
-    .querySelectorAll(".section-inner")
-    .forEach(element => {
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
 
-        element.classList.add("reveal");
+        // --- Form Handling ---
+        document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(currentLang === 'hy' ? 'Շնորհակալություն ձեր պատասխանի համար!' : 
+                  currentLang === 'ru' ? 'Спасибо за ваш ответ!' : 
+                  'Thank you for your response!');
+            this.reset();
+        });
 
-        observer.observe(element);
-
-    });
-
-
-/* =========================================================
-   RSVP ATTENDANCE LOGIC
-========================================================= */
-
-const yesRadio =
-    document.getElementById("yes");
-
-const noRadio =
-    document.getElementById("no");
-
-const guestInput =
-    document.querySelector(
-        'input[name="additional_guests"]'
-    );
-
-
-noRadio.addEventListener("change", function() {
-
-    if (this.checked) {
-
-        guestInput.value = 0;
-
-        guestInput.disabled = true;
-
-    }
-
-});
-
-
-yesRadio.addEventListener("change", function() {
-
-    if (this.checked) {
-
-        guestInput.disabled = false;
-
-    }
-
-});
-
-
-</script>
-
+    </script>
 </body>
 </html>
