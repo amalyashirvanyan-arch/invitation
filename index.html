@@ -65,7 +65,6 @@
             bottom: 0;
             width: 100%;
             height: 100%;
-            /* Using the specific envelope design image provided */
             background-image: url('https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1fe00499da93f36a28fba4a86e034bf4.jpg?v=1790166233');
             background-size: cover;
             background-position: center;
@@ -81,25 +80,23 @@
             left: 0;
             width: 100%;
             height: 50%; 
-            /* Using the same image for the flap to ensure continuity, positioned at top */
             background-image: url('https://cdn.shopify.com/s/files/1/0746/2692/4614/files/1fe00499da93f36a28fba4a86e034bf4.jpg?v=1790166233');
             background-size: cover;
             background-position: center top;
             transform-origin: top;
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 20;
-            /* Clip path to create the triangular flap shape visually if the image doesn't have transparency */
             clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
         }
 
-        /* The seal/button area */
+        /* The seal/button area - Modified to be invisible but clickable over the image area */
         .seal-area {
             position: absolute;
             top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             z-index: 30;
             cursor: pointer;
@@ -107,7 +104,8 @@
             justify-content: center;
             align-items: center;
             transition: all 0.3s ease;
-            overflow: hidden;
+            /* Removed background and border to make it invisible/clean */
+            background: transparent; 
         }
 
         .seal-glow {
@@ -264,7 +262,6 @@
 
     <!-- Audio Element -->
     <audio id="bg-music" loop>
-        <!-- Using a royalty free waltz placeholder -->
         <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a7346b.mp3?filename=waltz-of-the-flowers-11397.mp3" type="audio/mpeg">
     </audio>
 
@@ -279,10 +276,10 @@
             <div class="envelope-body"></div>
             <div class="envelope-flap"></div>
             <div class="light-overlay"></div>
+            <!-- Clickable Area (Invisible Seal) -->
             <div class="seal-area" onclick="openEnvelope()">
                 <div class="seal-glow"></div>
-                <!-- Seal Image -->
-                <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/e5b4d41319ae59041d4fad109e8ade7c.jpg?v=1790170036" alt="Seal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; opacity: 0.9;">
+                <!-- Removed the img tag here so only the glow indicates clickability -->
             </div>
         </div>
     </div>
@@ -292,8 +289,7 @@
         
         <!-- Header Image -->
         <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-            <!-- Couple Image -->
-            <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/92b1453fdf9fc1b36d62755bb81ca56f.jpg?v=1790166158" alt="Couple" class="w-full h-full object-cover object-top">
+            <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/3c437ff7ebc9d36b751fd2cb5be1e49d.jpg?v=1790168655" alt="Couple" class="w-full h-full object-cover object-top">
             <div class="absolute inset-0 bg-black/20 flex flex-col justify-center items-center text-center p-4">
                 <h1 class="text-4xl md:text-6xl text-white font-script mb-4 drop-shadow-lg" data-key="invitation_title">Wedding Invitation</h1>
                 <h2 class="text-5xl md:text-7xl text-white font-serif mb-6 drop-shadow-lg tracking-wider" data-key="couple_names">Anahit & Arsen</h2>
@@ -343,7 +339,6 @@
                 <!-- Event 1 -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
                     <div class="w-full h-48 mb-4 overflow-hidden rounded">
-                         <!-- Bride's Home Placeholder -->
                         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="Bride's Home" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                     </div>
                     <h4 class="text-xl font-bold text-[#800020] mb-2">11:00</h4>
@@ -353,7 +348,6 @@
                 <!-- Event 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
                     <div class="w-full h-48 mb-4 overflow-hidden rounded">
-                        <!-- Church Placeholder -->
                         <img src="https://images.unsplash.com/photo-1544078751-58fee6d8a00e?auto=format&fit=crop&q=80&w=800" alt="Church" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                     </div>
                     <h4 class="text-xl font-bold text-[#800020] mb-2">15:15</h4>
@@ -363,7 +357,6 @@
                 <!-- Event 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
                     <div class="w-full h-48 mb-4 overflow-hidden rounded">
-                        <!-- Reception Placeholder -->
                         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Reception" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                     </div>
                     <h4 class="text-xl font-bold text-[#800020] mb-2">17:30</h4>
@@ -373,7 +366,6 @@
                 <!-- Event 4 -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center border-t-4 border-[#800020]">
                     <div class="w-full h-48 mb-4 overflow-hidden rounded">
-                        <!-- Restaurant Placeholder -->
                         <img src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800" alt="Restaurant" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                     </div>
                     <h4 class="text-xl font-bold text-[#800020] mb-2">18:00</h4>
@@ -388,11 +380,9 @@
             
             <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
                 <div class="w-64 h-80 shadow-lg rounded-lg overflow-hidden relative group">
-                    <!-- Dress Code Image 1 -->
                     <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/download.png?v=1790166266" alt="Dress Code 1" class="w-full h-full object-cover">
                 </div>
                 <div class="w-64 h-80 shadow-lg rounded-lg overflow-hidden relative group">
-                    <!-- Dress Code Image 2 -->
                     <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/download_3.png?v=1790166265" alt="Dress Code 2" class="w-full h-full object-cover">
                 </div>
             </div>
@@ -486,7 +476,7 @@
             hy: {
                 invitation_title: "Հարսանիքի Հրավեր",
                 couple_names: "Անահիտ և Արսեն",
-                grace_presence: "Գեղեցկացրեք մեր օրը ձեր ներկայությամբ",
+                grace_presence: "Պատվեցեք մեզ ձեր ներկայությամբ",
                 wedding_date: "Հարսանիքի Օրը",
                 day: "Օր",
                 month: "Ամիս",
@@ -496,17 +486,17 @@
                 event_church: "15:15 – Պսակադրություն Սբ. Հռիփսիմե եկեղեցում",
                 event_guest_reception: "17:30 – Հյուրերի ընդունելություն",
                 event_dinner: "18:00 – Հարսանյաց խնջույք Դվին ռեստորանում",
-                dress_code_title: "Հագուստի գույներ",
+                dress_code_title: "Հագուստի կոդ",
                 dress_code_colors_desc: "Խնդրում ենք առաջնորդվել հետևյալ գունային գամմայով:",
                 no_white_request: "Խնդրանք. խնդրում ենք հարսանիքի օրը սպիտակ չհագնել։",
-                join_celebration: "ՄԻԱՑԵՔ ՄԵՐ ՀԱՐՍԱՆՅԱՑ ՀԱՆԴԵՍԻՆ",
-                rsvp_subtitle: "Մենք ուրախ ենք ձեր ներկայության համար",
+                join_celebration: "ՄԻԱՑԵՔ ՄԵՐ ՏՈՆԱԽՄԲՈՒԹՅԱՆԸ",
+                rsvp_subtitle: "Մեզ համար պատիվ կլինի ձեր ներկայությունը",
                 label_name: "Անուն Ազգանուն",
-                label_attend: "Մասնակցելու ե՞ս",
+                label_attend: "Կմասնակցե՞ք",
                 opt_yes: "Այո",
                 opt_no: "Ոչ",
                 label_guests: "Ուղեկցող անձանց քանակը",
-                label_events: "Որ տոնախմբությանը կմասնակցեք",
+                label_events: "Որ հատվածներին կմասնակցեք",
                 event_bride_home_short: "Հարսնացուի տուն (11:00)",
                 event_church_short: "Եկեղեցի (15:15)",
                 event_reception_short: "Խնջույք (18:00)",
@@ -578,13 +568,11 @@
             currentLang = lang;
             document.documentElement.lang = lang;
             
-            // Update buttons
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if(btn.dataset.lang === lang) btn.classList.add('active');
             });
 
-            // Update text
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.dataset.key;
                 if (translations[lang][key]) {
@@ -593,7 +581,6 @@
             });
         }
 
-        // Initialize Language Buttons
         const langContainer = document.createElement('div');
         langContainer.className = "fixed top-4 right-4 z-50 flex bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md";
         ['hy', 'en', 'ru'].forEach(lang => {
@@ -612,10 +599,7 @@
             const container = document.getElementById('envelope-container');
             const mainContent = document.getElementById('main-content');
             
-            // Trigger animations
             container.classList.add('envelope-open');
-            
-            // Play music automatically if allowed by browser (often blocked until interaction)
             toggleMusic(true);
 
             setTimeout(() => {
@@ -623,10 +607,10 @@
                 setTimeout(() => {
                     container.style.display = 'none';
                     mainContent.classList.remove('hidden');
-                    initScratchCards(); // Initialize scratch cards after reveal
-                    observeSections(); // Start fade-in observer
+                    initScratchCards();
+                    observeSections();
                 }, 1000);
-            }, 2500); // Wait for light and flap animation
+            }, 2500);
         }
 
         // --- Music Logic ---
@@ -638,12 +622,12 @@
             if (forcePlay || !isPlaying) {
                 audio.play().then(() => {
                     isPlaying = true;
-                    musicIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'; // Pause icon
+                    musicIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
                 }).catch(e => console.log("Audio play failed (interaction needed):", e));
             } else {
                 audio.pause();
                 isPlaying = false;
-                musicIcon.innerHTML = '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'; // Play icon
+                musicIcon.innerHTML = '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>';
             }
         }
 
@@ -657,15 +641,12 @@
                 const width = container.offsetWidth;
                 const height = container.offsetHeight;
 
-                // Set canvas size
                 canvas.width = width;
                 canvas.height = height;
 
-                // Fill with overlay color/image
-                ctx.fillStyle = '#C3B091'; // Khaki color for scratch layer
+                ctx.fillStyle = '#C3B091';
                 ctx.fillRect(0, 0, width, height);
                 
-                // Add some texture/text to scratch layer
                 ctx.fillStyle = '#800020';
                 ctx.font = '14px Arial';
                 ctx.textAlign = 'center';
@@ -700,13 +681,11 @@
                     ctx.fill();
                 }
 
-                // Mouse events
                 canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
                 canvas.addEventListener('mousemove', scratch);
                 canvas.addEventListener('mouseup', () => isDrawing = false);
                 canvas.addEventListener('mouseleave', () => isDrawing = false);
 
-                // Touch events
                 canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
                 canvas.addEventListener('touchmove', scratch);
                 canvas.addEventListener('touchend', () => isDrawing = false);
