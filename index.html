@@ -288,9 +288,10 @@
     <main id="main-content" class="hidden max-w-4xl mx-auto bg-white shadow-2xl min-h-screen relative">
         
         <!-- Header Image -->
-        <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-            <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/3c437ff7ebc9d36b751fd2cb5be1e49d.jpg?v=1790168655" alt="Couple" class="w-full h-full object-cover object-top">
-            <div class="absolute inset-0 bg-black/20 flex flex-col justify-center items-center text-center p-4">
+        <div class="relative w-full overflow-hidden">
+            <!-- Updated Image with object-contain to show full image -->
+            <img src="https://cdn.shopify.com/s/files/1/0746/2692/4614/files/e5b4d41319ae59041d4fad109e8ade7c.jpg?v=1790170036" alt="Couple" class="w-full h-auto object-contain">
+            <div class="absolute inset-0 bg-black/10 flex flex-col justify-center items-center text-center p-4">
                 <h1 class="text-4xl md:text-6xl text-white font-script mb-4 drop-shadow-lg" data-key="invitation_title">Wedding Invitation</h1>
                 <h2 class="text-5xl md:text-7xl text-white font-serif mb-6 drop-shadow-lg tracking-wider" data-key="couple_names">Anahit & Arsen</h2>
                 <p class="text-xl md:text-2xl text-white font-light italic drop-shadow-md" data-key="grace_presence">Grace our day with your presence</p>
@@ -474,29 +475,29 @@
         // --- Translations ---
         const translations = {
             hy: {
-                invitation_title: "Հարսանիքի Հրավեր",
+                invitation_title: "Հարսանեկան Հրավեր",
                 couple_names: "Անահիտ և Արսեն",
-                grace_presence: "Պատվեցեք մեզ ձեր ներկայությամբ",
+                grace_presence: "Գեղեցկացրեք մեր օրը ձեր ներկայությամբ",
                 wedding_date: "Հարսանիքի Օրը",
                 day: "Օր",
                 month: "Ամիս",
                 year: "Տարի",
-                schedule_title: "Հարսանիքի Ժամանակացույց",
+                schedule_title: "Հարսանեկան Ժամանակացույց",
                 event_bride_home: "11:00 – Հարսնացուի տուն",
                 event_church: "15:15 – Պսակադրություն Սբ. Հռիփսիմե եկեղեցում",
                 event_guest_reception: "17:30 – Հյուրերի ընդունելություն",
                 event_dinner: "18:00 – Հարսանյաց խնջույք Դվին ռեստորանում",
-                dress_code_title: "Հագուստի կոդ",
+                dress_code_title: "Հագուստի գունային գամմա",
                 dress_code_colors_desc: "Խնդրում ենք առաջնորդվել հետևյալ գունային գամմայով:",
                 no_white_request: "Խնդրանք. խնդրում ենք հարսանիքի օրը սպիտակ չհագնել։",
                 join_celebration: "ՄԻԱՑԵՔ ՄԵՐ ՏՈՆԱԽՄԲՈՒԹՅԱՆԸ",
-                rsvp_subtitle: "Մեզ համար պատիվ կլինի ձեր ներկայությունը",
+                rsvp_subtitle: "Մեզ հաճելի է ձեր ներկայությունը",
                 label_name: "Անուն Ազգանուն",
-                label_attend: "Կմասնակցե՞ք",
+                label_attend: "Մասնակցելու ե՞ս",
                 opt_yes: "Այո",
                 opt_no: "Ոչ",
                 label_guests: "Ուղեկցող անձանց քանակը",
-                label_events: "Որ հատվածներին կմասնակցեք",
+                label_events: "Որ տոնախմբությանը կմասնակցեք",
                 event_bride_home_short: "Հարսնացուի տուն (11:00)",
                 event_church_short: "Եկեղեցի (15:15)",
                 event_reception_short: "Խնջույք (18:00)",
